@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MacUnlocked</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <canvas id="matrix"></canvas>
+      <div class="lock-screen" id="lockScreen">
+        <div class="lock-icon" id="unlockBtn">🔒</div>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="Enter password..."
+        />
+        <div id="passwordFeedback" class="password-feedback"></div>
+      </div>
+      <div class="content" id="content">
+        <h1 class="title" id="macUnlockedTitle">MacUnlocked</h1>
+        <div class="cards">
+          <div class="card" onclick="openPage('vpn')">VPNs</div>
+          <div class="card" onclick="openPage('proxy')">Proxies</div>
+          <div class="card" onclick="openPage('guides')">Guides</div>
+          <div class="card" onclick="openPage('apps')">Apps</div>
+        </div>
+        <div class="card settings-button" id="settingsBtn">⚙ Settings</div>
+      </div>
+      <div class="settings-panel" id="settingsPanel">
+        <h2>Settings</h2>
+        <label for="colorPicker">Matrix Color:</label>
+        <input type="color" id="colorPicker" value="#00ffcc" />
+        <label for="fontSelector">Font:</label>
+        <select id="fontSelector">
+          <option value="Courier New">Courier New</option>
+          <option value="Arial">Arial</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Monospace">Monospace</option>
+        </select>
+        <button id="closeSettings">Close</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
