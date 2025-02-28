@@ -142,10 +142,5 @@ document.addEventListener("DOMContentLoaded", function () {
     titleElement.style.textShadow = `0 0 30px ${matrixColor}, 0 0 60px ${matrixColor}`;
   }
 });
-
-function openPage(page) {
-  if (page === "games") {
-    window.location.href = "games.html";
-  }
   // Add other page handling as needed
 }
