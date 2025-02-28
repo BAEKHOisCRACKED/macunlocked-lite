@@ -20,6 +20,7 @@ body {
   width: 100%;
   height: 100%;
   filter: blur(2px);
+  z-index: 1;
 }
 
 .lock-screen {
@@ -29,6 +30,7 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   animation: fadeIn 1s ease-in-out;
+  z-index: 3;
 }
 
 .lock-icon {
@@ -89,47 +91,147 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
+  z-index: 2;
 }
 
 .title {
-  font-size: 48px;
-  margin-bottom: 30px;
-  text-shadow: 0 0 10px var(--theme-color, #00ffcc),
-    0 0 20px var(--theme-color, #00ffcc), 2px 2px 0 #ff00ff, -2px -2px 0 #00ffff;
-  animation: glitch 1s infinite;
+  font-size: 3.5rem;
+  margin: 0 0 2rem;
   position: relative;
+  animation: auraPulse 1.5s infinite alternate, glitch 2s infinite;
+  text-shadow: 0 0 20px var(--theme-color), 0 0 40px var(--theme-color),
+    0 0 60px var(--theme-color), 2px 2px 0 #ff00ff, -2px -2px 0 #00ffff;
 }
 
 .cards {
   display: flex;
   gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
   background: rgba(0, 255, 204, 0.1);
   padding: 15px 30px;
   cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
   border: 1px solid var(--theme-color, #00ffcc);
   text-shadow: 0 0 5px var(--theme-color, #00ffcc);
+  border-radius: 4px;
 }
 
 .card:hover {
   background: rgba(0, 255, 204, 0.2);
   box-shadow: 0 0 10px var(--theme-color, #00ffcc);
+  transform: scale(1.05);
 }
 
 .settings-panel {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  border: 1px solid var(--theme-color, #00ffcc);
-  box-shadow: 0 0 10px var(--theme-color, #00ffcc);
-  text-align: left;
+  transform: translate(-50%, -40%) scale(0.95);
+  background: rgba(0, 0, 0, 0.95);
+  padding: 35px;
+  border: 2px solid var(--theme-color);
+  border-radius: 12px;
+  box-shadow: 0 0 40px var(--theme-color);
+  min-width: 350px;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 4;
+}
+
+.settings-panel.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.settings-button {
+  margin-top: 30px;
+  padding: 15px 40px;
+  background: rgba(0, 255, 204, 0.1);
+  border: 1px solid var(--theme-color);
+  transition: all 0.3s ease;
+}
+
+.settings-button:hover {
+  background: rgba(0, 255, 204, 0.2);
+  box-shadow: 0 0 15px var(--theme-color);
+  transform: scale(1.05);
+}
+
+.color-picker-wrapper {
+  border: 1px solid var(--theme-color);
+  border-radius: 4px;
+  padding: 5px;
+  background: rgba(0, 255, 204, 0.05);
+  transition: all 0.3s ease;
+}
+
+.color-picker-wrapper:hover {
+  box-shadow: 0 0 10px var(--theme-color);
+}
+
+#colorPicker {
+  width: 100%;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.select-wrapper {
+  position: relative;
+  border: 1px solid var(--theme-color);
+  border-radius: 4px;
+  background: rgba(0, 255, 204, 0.05);
+  transition: all 0.3s ease;
+}
+
+.select-wrapper:hover {
+  box-shadow: 0 0 10px var(--theme-color);
+}
+
+#fontSelector {
+  width: 100%;
+  padding: 12px 15px;
+  background: transparent;
+  border: none;
+  color: var(--theme-color);
+  font-size: 1rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--theme-color);
+  pointer-events: none;
+}
+
+#closeSettings {
+  background: rgba(0, 255, 204, 0.1);
+  border: 1px solid var(--theme-color);
+  color: var(--theme-color);
+  padding: 15px 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px var(--theme-color);
+  margin-top: 25px;
+  border-radius: 4px;
+}
+
+#closeSettings:hover {
+  background: rgba(0, 255, 204, 0.2);
+  box-shadow: 0 0 10px var(--theme-color);
+  transform: scale(1.05);
 }
 
 @keyframes fadeIn {
@@ -138,25 +240,6 @@ body {
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes glitch {
-  0% {
-    text-shadow: 0 0 10px var(--theme-color), 0 0 20px var(--theme-color);
-  }
-  2% {
-    text-shadow: 2px 2px 0 #ff00ff, -2px -2px 0 #00ffff;
-  }
-  4% {
-    text-shadow: -1px -1px 0 #ff00ff, 1px 1px 0 #00ffff;
-  }
-  6% {
-    text-shadow: 3px 3px 0 #ff00ff, -3px -3px 0 #00ffff;
-  }
-  8%,
-  100% {
-    text-shadow: 0 0 10px var(--theme-color), 0 0 20px var(--theme-color);
   }
 }
 
@@ -178,6 +261,36 @@ body {
   }
 }
 
+@keyframes auraPulse {
+  0% {
+    text-shadow: 0 0 10px var(--theme-color), 0 0 20px var(--theme-color),
+      0 0 30px var(--theme-color);
+  }
+  100% {
+    text-shadow: 0 0 30px var(--theme-color), 0 0 60px var(--theme-color),
+      0 0 90px var(--theme-color);
+  }
+}
+
+@keyframes glitch {
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+}
+
 @keyframes shake {
   10%,
   90% {
@@ -196,56 +309,4 @@ body {
   60% {
     transform: translateX(4px);
   }
-}
-
-/* Settings button positioning */
-.settings-button {
-  margin-top: 30px;
-  padding: 12px 40px !important;
-  background: rgba(0, 255, 204, 0.05) !important;
-}
-
-/* Enhanced settings panel */
-.settings-panel {
-  min-height: 300px;
-  width: 250px;
-  padding: 25px;
-  border-radius: 8px;
-  opacity: 0;
-  transform: translate(-50%, -45%) scale(0.95);
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-.settings-panel.active {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.settings-panel h2 {
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--theme-color);
-  padding-bottom: 10px;
-}
-
-.settings-panel label {
-  display: block;
-  margin: 15px 0 5px;
-}
-
-.settings-panel button {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 25px;
-  background: rgba(0, 255, 204, 0.1);
-  border: 1px solid var(--theme-color);
-  color: var(--theme-color);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.settings-panel button:hover {
-  background: rgba(0, 255, 204, 0.2);
-  box-shadow: 0 0 10px var(--theme-color);
 }
