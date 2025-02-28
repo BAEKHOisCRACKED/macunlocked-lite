@@ -22,24 +22,30 @@
         <h1 class="title" id="macUnlockedTitle">MacUnlocked</h1>
         <div class="cards">
           <div class="card" onclick="openPage('vpn')">VPNs</div>
-          <div class="card" onclick="openPage('proxy')">Proxies</div>
+          <div class="card" onclick="openPage('games')">Games</div>
           <div class="card" onclick="openPage('guides')">Guides</div>
           <div class="card" onclick="openPage('apps')">Apps</div>
         </div>
         <div class="card settings-button" id="settingsBtn">⚙ Settings</div>
       </div>
       <div class="settings-panel" id="settingsPanel">
-        <h2>Settings</h2>
+        <h2>System Configuration</h2>
         <label for="colorPicker">Matrix Color:</label>
-        <input type="color" id="colorPicker" value="#00ffcc" />
-        <label for="fontSelector">Font:</label>
-        <select id="fontSelector">
-          <option value="Courier New">Courier New</option>
-          <option value="Arial">Arial</option>
-          <option value="Verdana">Verdana</option>
-          <option value="Monospace">Monospace</option>
-        </select>
-        <button id="closeSettings">Close</button>
+        <div class="color-picker-wrapper">
+          <input type="color" id="colorPicker" value="#00ffcc" />
+        </div>
+
+        <label for="fontSelector">Interface Font:</label>
+        <div class="select-wrapper">
+          <select id="fontSelector">
+            <option value="Courier New">Courier New</option>
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Monospace">Monospace</option>
+          </select>
+        </div>
+
+        <button id="closeSettings">Apply & Close</button>
       </div>
     </div>
     <script src="script.js"></script>
